@@ -157,7 +157,7 @@ bat <- all_balls %>%
   )
 
 bowl <- all_balls %>%
-  group_by(match_id, team = bowling_team, player = bowler) %>%
+  group_by(match_id, team = bowling_team[[1]], player = bowler) %>%
   summarise(
     bowling_impact = sum(bowler_ROE, na.rm = TRUE),
     .groups = "drop"
