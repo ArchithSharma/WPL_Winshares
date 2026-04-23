@@ -1,3 +1,6 @@
+library(stringr)
+library(gt)
+
 player_match <- player_match %>%
   group_by(match_id, team) %>%
   mutate(
@@ -68,6 +71,13 @@ season_shares <- player_match %>%
   ) %>%
   arrange(desc(total_share))
 
+clean_name_key <- function(x) {
+  x %>%
+    str_to_lower() %>%
+    str_replace_all("[^a-z\\- ]", "") %>%   # keep letters, space, hyphen
+    str_squish()
+}
+
 season_shares <- season_shares %>%
   mutate(
     name_key = clean_name_key(player),
@@ -79,14 +89,9 @@ season_shares <- season_shares %>%
     )
   )
 
-clean_name_key <- function(x) {
-  x %>%
-    str_to_lower() %>%
-    str_replace_all("[^a-z\\- ]", "") %>%   # keep letters, space, hyphen
-    str_squish()
-}
 
-auction <- read.csv("auction.csv")
+
+auction <- read.csv("data/auction.csv")
 auction <- auction %>%
   mutate(
     name_key = clean_name_key(Player),
@@ -175,4 +180,46 @@ player_value <- player_value %>%
 auction_winners <- player_value %>%
   filter(!is.na(WS_per_cr)) %>%
   arrange(desc(WS_per_cr)) %>%
-  select(player, Team, Sold_Cr, total_share, WS_per_cr, Role, Overseas)
+  select(player, Team, Sold_Cr, total_share, WS_per_cr, Role, Overseas, matches)
+
+by_team <- auction_winners %>%
+  group_by(Team) %>%
+  summarise(
+    total_WS = sum(total_share, na.rm = TRUE),
+    total_spent = sum(Sold_Cr, na.rm = TRUE),
+    avg_WS_per_cr = mean(WS_per_cr, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  arrange(desc(total_WS))
+by_team <- by_team %>%
+  mutate(
+    logo_path = paste0("logos/", Team, ".png"))
+
+teamplot <- by_team %>%
+  # 1. Force the logo path to be the very first column
+  relocate(logo_path, .before = Team) %>%
+  gt() %>%
+  text_transform(
+    locations = cells_body(columns = logo_path),
+    fn = function(x) local_image(filename = x, height = 40)
+  ) %>%
+  # 2. Hide column names for the logo to keep it clean
+  cols_label(
+    logo_path = "", 
+    Team = "Team", 
+    total_WS = "Total WS", 
+    total_spent = "Total Spent (₹Cr)", 
+    avg_WS_per_cr = "Avg WS/₹"
+  ) %>%
+  # 3. Align everything appropriately
+  cols_align("left", columns = Team) %>%
+  cols_align("center", columns = c(logo_path, total_WS, avg_WS_per_cr)) %>%
+  fmt_currency(columns = total_spent, currency = "INR", decimals = 2) %>%
+  fmt_number(columns = c(total_WS, avg_WS_per_cr), decimals = 2) %>%
+  tab_style(
+    style = cell_text(weight = "bold"), 
+    locations = cells_column_labels()
+  ) %>%
+  tab_header(title = md("**Team Performance Summary**"))
+
+gtsave(teamplot, "team_summary.png")

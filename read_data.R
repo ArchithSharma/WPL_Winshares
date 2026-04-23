@@ -1,6 +1,7 @@
 library(jsonlite)
 library(dplyr)
 library(purrr)
+library(ggplot2)
 
 match_ids <- c(
   1513703,1513702,1513701,1513700,1513699,1513698,
@@ -9,7 +10,7 @@ match_ids <- c(
   1513685,1513684,1513683,1513682
 )
 
-files <- paste0(match_ids, ".json")
+files <- paste0("data/", match_ids, ".json")
 
 library(jsonlite)
 library(dplyr)
@@ -149,6 +150,11 @@ all_balls <- all_balls %>%
 sum(all_balls$batter_ROE) + sum(all_balls$bowler_ROE)
 # should be approx: -sum(runs_total - runs_batter)
 
+all_balls <- all_balls %>%
+  mutate(
+    bowling_team = map_chr(bowling_team, 1)
+  )
+
 bat <- all_balls %>%
   group_by(match_id, team = batting_team, player = batter) %>%
   summarise(
@@ -157,7 +163,7 @@ bat <- all_balls %>%
   )
 
 bowl <- all_balls %>%
-  group_by(match_id, team = bowling_team[[1]], player = bowler) %>%
+  group_by(match_id, team = bowling_team, player = bowler) %>%
   summarise(
     bowling_impact = sum(bowler_ROE, na.rm = TRUE),
     .groups = "drop"
@@ -171,18 +177,22 @@ player_match <- full_join(bat, bowl,
   )
 
 player_match <- player_match %>%
-  group_by(match_id, team) %>%
+  # Group ONLY by match_id to compare all 22 players
+  group_by(match_id) %>% 
   mutate(
-    bat_sd  = sd(batting_impact),
-    bowl_sd = sd(bowling_impact),
+    # Z-scores across the whole match
+    bat_z = (batting_impact - mean(batting_impact)) / sd(batting_impact),
+    bowl_z = (bowling_impact - mean(bowling_impact)) / sd(bowling_impact),
     
-    bat_z = ifelse(bat_sd > 0,
-                   (batting_impact - mean(batting_impact)) / bat_sd,
-                   0),
+    # Absolute impact of the entire match
+    match_bat_abs = sum(abs(bat_z), na.rm = TRUE),
+    match_bowl_abs = sum(abs(bowl_z), na.rm = TRUE),
     
-    bowl_z = ifelse(bowl_sd > 0,
-                    (bowling_impact - mean(bowling_impact)) / bowl_sd,
-                    0)
+    # Player's share of the total match performance
+    bat_share = 0.5 * (bat_z / match_bat_abs),
+    bowl_share = 0.5 * (bowl_z / match_bowl_abs),
+    
+    total_share = 2 * (bat_share + bowl_share)
   ) %>%
   ungroup()
 

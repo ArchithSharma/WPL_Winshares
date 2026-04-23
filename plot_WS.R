@@ -64,21 +64,21 @@ create_10x2_player_table <- function(df, title_text, color_col) {
 auction_winners <- auction_winners %>%
   mutate(logo_path = paste0("logos/", Team, ".png"))
 # Best Value
-best_value_data <- auction_winners %>% arrange(desc(WS_per_cr)) %>% head(20) %>%
+best_value_data <- auction_winners %>% filter(matches > 2) %>% arrange(desc(WS_per_cr)) %>% head(20) %>%
   select(logo_path, player, Role, Sold_Cr, total_share, WS_per_cr)
 gtsave(create_10x2_player_table(best_value_data, "Best Value Players", "WS_per_cr"), "best_value_players.png")
 
 # Most Expensive
-most_exp_data <- auction_winners %>% arrange(desc(Sold_Cr)) %>% head(20) %>%
+most_exp_data <- auction_winners %>% filter(matches > 2) %>% arrange(desc(Sold_Cr)) %>% head(20) %>%
   select(logo_path, player, Role, Sold_Cr, total_share, WS_per_cr)
 gtsave(create_10x2_player_table(most_exp_data, "Most Expensive Players", "Sold_Cr"), "most_expensive_players.png")
 
 # Most Win Shares
-by_shares_data <- auction_winners %>% arrange(desc(total_share)) %>% head(20) %>%
+by_shares_data <- auction_winners %>% filter(matches > 2) %>% arrange(desc(total_share)) %>% head(20) %>%
   select(logo_path, player, Role, Sold_Cr, total_share, WS_per_cr)
 gtsave(create_10x2_player_table(by_shares_data, "Top Performers by Win Shares", "total_share"), "most_win_shares.png")
 
 # Worst Players
-worst_data <- auction_winners %>% arrange(total_share) %>% head(20) %>%
+worst_data <- auction_winners %>% filter(matches > 2) %>% arrange(total_share) %>% head(20) %>%
   select(logo_path, player, Role, Sold_Cr, total_share, WS_per_cr)
 gtsave(create_10x2_player_table(worst_data, "Worst Performing Players", "total_share"), "worst_players.png")
