@@ -18,24 +18,42 @@ https://cricsheet.org/format/json/, and you can find the available downloads of 
 The matches contained in the season are listed below, as well as Cricsheet Match ID.
 
 2026-02-05 - club - WPL - female - 1513703 - Delhi Capitals vs Royal Challengers Bengaluru
+
 2026-02-03 - club - WPL - female - 1513702 - Gujarat Giants vs Delhi Capitals
+
 2026-02-01 - club - WPL - female - 1513701 - UP Warriorz vs Delhi Capitals
+
 2026-01-30 - club - WPL - female - 1513700 - Gujarat Giants vs Mumbai Indians
+
 2026-01-29 - club - WPL - female - 1513699 - UP Warriorz vs Royal Challengers Bengaluru
+
 2026-01-27 - club - WPL - female - 1513698 - Gujarat Giants vs Delhi Capitals
+
 2026-01-26 - club - WPL - female - 1513697 - Mumbai Indians vs Royal Challengers Bengaluru
+
 2026-01-24 - club - WPL - female - 1513696 - Royal Challengers Bengaluru vs Delhi Capitals
+
 2026-01-22 - club - WPL - female - 1513695 - Gujarat Giants vs UP Warriorz
+
 2026-01-20 - club - WPL - female - 1513694 - Mumbai Indians vs Delhi Capitals
+
 2026-01-19 - club - WPL - female - 1513693 - Royal Challengers Bengaluru vs Gujarat Giants
+
 2026-01-17 - club - WPL - female - 1513692 - Delhi Capitals vs Royal Challengers Bengaluru
+
 2026-01-17 - club - WPL - female - 1513691 - UP Warriorz vs Mumbai Indians
+
 2026-01-16 - club - WPL - female - 1513690 - Royal Challengers Bengaluru vs Gujarat Giants
+
 2026-01-15 - club - WPL - female - 1513689 - Mumbai Indians vs UP Warriorz
+
 2026-01-14 - club - WPL - female - 1513688 - UP Warriorz vs Delhi Capitals
+
 2026-01-13 - club - WPL - female - 1513687 - Gujarat Giants vs Mumbai Indians
+
 2026-01-12 - club - WPL - female - 1513686 - UP Warriorz vs Royal Challengers Bengaluru
+
 2026-01-11 - club - WPL - female - 1513685 - Gujarat Giants vs Delhi Capitals
-2026-01-10 - club - WPL - female - 1513684 - Mumbai Indians vs Delhi Capitals
-2026-01-10 - club - WPL - female - 1513683 - Gujarat Giants vs UP Warriorz
+
+2026-01-10 - club - WPL - female - 1513684 - Mumbai Indians vs Delhi Capitals2026-01-10 - club - WPL - female - 1513683 - Gujarat Giants vs UP Warriorz
 2026-01-09 - club - WPL - female - 1513682 - Mumbai Indians vs Royal Challengers Bengaluru
