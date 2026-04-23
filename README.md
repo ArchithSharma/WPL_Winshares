@@ -55,5 +55,8 @@ The matches contained in the season are listed below, as well as Cricsheet Match
 
 2026-01-11 - club - WPL - female - 1513685 - Gujarat Giants vs Delhi Capitals
 
-2026-01-10 - club - WPL - female - 1513684 - Mumbai Indians vs Delhi Capitals2026-01-10 - club - WPL - female - 1513683 - Gujarat Giants vs UP Warriorz
+2026-01-10 - club - WPL - female - 1513684 - Mumbai Indians vs Delhi Capitals
+
+2026-01-10 - club - WPL - female - 1513683 - Gujarat Giants vs UP Warriorz
+
 2026-01-09 - club - WPL - female - 1513682 - Mumbai Indians vs Royal Challengers Bengaluru
